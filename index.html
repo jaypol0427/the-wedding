@@ -27,122 +27,84 @@
     integrity="sha384-WAsFbnLEQcpCk8lM1UTWesAf5rGTCvb2Y+8LvyjAAcxK1c3s5c0L+SYOgxvc6PWG"
     crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
   <script src="js/jquery.coundown.js"></script>
   <link rel="icon" type="image/png" href="image/favicon.png" />
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23064379-20"></script>
-  <!-- Begin Script for Countdown -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
     gtag('config', 'UA-23064379-20');
-  </script>
-  <script>
     var script_url = "https://script.google.com/macros/s/AKfycbxiJKbtSOuMZDUTLwEmWUveE-gq-qivxVLdrF4yFgE6dRb3-yMEP6KEBYV3tXu6DMPIiA/exec";
 
+    $(function () {
+      var searchParams = new URLSearchParams(window.location.search);
+      if (searchParams.has("Code"))
+        $("#code").val(searchParams.get("Code"));
+    })
+
     function getName() {
-      var url = script_url + "?action=getName&code=" + $("#code").val();
+      if ($("#code").val().trim() == "") {
+        alert("Please input your invitation code");
+        return;
+      }
+
+      $("#btnVerify").prop('disabled', true);
+      $("#btnVerify").html("Wait a moment...");
+      var url = script_url + "?action=getName&code=" + $("#code").val().toUpperCase();
       $.getJSON(url, function (json) {
         if (json.records.length == 0) alert("Invalid invitation code");
-      });
-    }
+        else {
+          var guestName = json.records[0][0];
+          var additionalHeadCount = json.records[0][2] == "" ? 0 : parseInt(json.records[0][2]);
+          var additionalHeadNames = json.records[0][3] == "" ? [] : json.records[0][3].split(',');
+          if (additionalHeadCount > 0) {
+            var fields = new Array();
+            for (var i = 0; i < additionalHeadCount; i++) {
+              fields.push('<div class="col-md-12 pt-2"><input type="text" placeholder="Name of additional person" class="form-control additional-person"></div>');
+            }
 
-    // Make an AJAX call to Google Script
-    function insert_value() {
+            $('#additionalHeads').html(fields.join(''));
 
-      $("#re").css("visibility", "hidden");
-      document.getElementById("loader").style.visibility = "visible";
-      $('#mySpinner').addClass('spinner');
+            var i = 0;
+            additionalHeadNames.forEach(x => {
+              $('.additional-person').eq(i).val(x);
+              i++;
+            });
 
-      var id1 = $("#id").val();
-      var name = $("#name").val();
+            $('#additionalHeadDiv').show();
+          }
+          else $('#additionalHeadDiv').hide();
 
-
-      var url = script_url + "?callback=ctrlq&name=" + name + "&id=" + id1 + "&action=insert";
-
-
-      var request = jQuery.ajax({
-        crossDomain: true,
-        url: url,
-        method: "GET",
-        dataType: "jsonp"
-      });
-
-    }
-
-    function update_value() {
-      $("#re").css("visibility", "hidden");
-      document.getElementById("loader").style.visibility = "visible";
-      var id1 = $("#id").val();
-      var name = $("#name").val();
-      var url = script_url + "?callback=ctrlq&name=" + name + "&id=" + id1 + "&action=update";
-      var request = jQuery.ajax({
-        crossDomain: true,
-        url: url,
-        method: "GET",
-        dataType: "jsonp"
-      });
-
-    }
-
-    function delete_value() {
-      $("#re").css("visibility", "hidden");
-      document.getElementById("loader").style.visibility = "visible";
-      $('#mySpinner').addClass('spinner');
-      var id1 = $("#id").val();
-      var name = $("#name").val();
-      var url = script_url + "?callback=ctrlq&name=" + name + "&id=" + id1 + "&action=delete";
-      var request = jQuery.ajax({
-        crossDomain: true,
-        url: url,
-        method: "GET",
-        dataType: "jsonp"
-      });
-
-    }
-
-    // print the returned data
-    function ctrlq(e) {
-      alert(e);
-    }
-
-    function read_value() {
-
-      $("#re").css("visibility", "hidden");
-
-      document.getElementById("loader").style.visibility = "visible";
-      var url = script_url + "?action=read";
-
-      $.getJSON(url, function (json) {
-        var table = document.createElement("table");
-
-        var header = table.createTHead();
-        var row = header.insertRow(0);
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-
-        cell1.innerHTML = "<b>ID</b>";
-        cell2.innerHTML = "<b>Name</b>";
-
-        // ADD JSON DATA TO THE TABLE AS ROWS.
-        for (var i = 0; i < json.records.length; i++) {
-
-          tr = table.insertRow(-1);
-          var tabCell = tr.insertCell(-1);
-          tabCell.innerHTML = json.records[i].ID;
-          tabCell = tr.insertCell(-1);
-          tabCell.innerHTML = json.records[i].NAME;
+          $('#guestName').html(guestName);
+          $('#additionalHeadCount').html(additionalHeadCount);
+          $('#attendanceModal').modal("show");
         }
 
+        $("#btnVerify").prop('disabled', false);
+        $("#btnVerify").html("Verify");
+      });
+    }
 
-        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
-        var divContainer = document.getElementById("showData");
-        divContainer.innerHTML = "";
-        divContainer.appendChild(table);
-        document.getElementById("loader").style.visibility = "hidden";
-        $("#re").css("visibility", "visible");
+    function updateAttendance(response) {
+      var additionalHeadNames = [];
+      $('.additional-person').each(function () {
+        if ($(this).val().trim() != "") additionalHeadNames.push($(this).val().trim());
+      });
+
+      var url = script_url + "?action=updateAttendance&attending=" + response
+        + "&code=" + $("#code").val().toUpperCase()
+        + "&additionalHeads=" + additionalHeadNames.toString()
+        + "&confirmHeadCount=" + additionalHeadNames.length;
+
+      $.getJSON(url, function (json) {
+        alert("Thanks for your response!");
+        $('#attendanceModal').modal("hide");
       });
     }
 
@@ -155,6 +117,40 @@
 </head>
 
 <body>
+  <div class="modal fade" id="attendanceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Attendance Confirmation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row text-center">
+            <div class="col-md-12">
+              Hi <span id="guestName" class="fw-bold"></span>! You are invited to our wedding.
+            </div>
+          </div>
+          <div class="row text-center pt-3" id="additionalHeadDiv">
+            <div class="col-md-12">
+              You are also entitled to bring <span id="additionalHeadCount" class="fw-bold"></span> person(s) with you!
+              <br>
+              Please specify the name of the person(s) you wanted to tag along below. Leave blank if not possible.
+            </div>
+            <div id="additionalHeads"></div>
+          </div>
+          <div class="col-md-12 pt-3 text-center">
+            Are you going to attend?
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" onclick="updateAttendance('YES')">Yes</button>
+          <button type="button" class="btn btn-primary" onclick="updateAttendance('DECIDING')">Still Deciding</button>
+          <button type="button" class="btn btn-secondary" onclick="updateAttendance('NO')">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Begin Preloader -->
   <div class="preloader-wrapper">
     <div class="preloader">
@@ -529,7 +525,8 @@
         <div class="row" data-aos="fade-up" data-aos-easing="linear">
           <div class="col"></div>
           <div class="col-md-6">
-            <input type="text" style="font-family: Arial, Helvetica, sans-serif; font-weight: bolder;"
+            <input type="text"
+              style="font-family: Arial, Helvetica, sans-serif; font-weight: bolder; text-transform:uppercase;"
               class="form-control text-center" id="code">
           </div>
           <div class="col"></div>
@@ -537,7 +534,7 @@
         <div class="row pt-4" data-aos="fade-up" data-aos-easing="linear">
           <div class="col"></div>
           <div class="d-grid gap-2 col-4 mx-auto">
-            <input type="button" class="btn btn-success" onclick="getName()" value="Verify" />
+            <button id="btnVerify" class="btn btn-success" onclick="getName()">Verify</button>
           </div>
           <div class="col"></div>
         </div>
