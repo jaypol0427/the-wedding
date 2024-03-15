@@ -21,6 +21,8 @@
   <link rel="stylesheet" type="text/css" href="css/menikah.css" />
   <link rel="stylesheet" type="text/css" href="css/jquery.countdown.css" />
   <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://kit.fontawesome.com/2828f7885a.js"
     integrity="sha384-WAsFbnLEQcpCk8lM1UTWesAf5rGTCvb2Y+8LvyjAAcxK1c3s5c0L+SYOgxvc6PWG"
     crossorigin="anonymous"></script>
@@ -37,6 +39,115 @@
 
     gtag('config', 'UA-23064379-20');
   </script>
+  <script>
+    var script_url = "https://script.google.com/macros/s/AKfycbxiJKbtSOuMZDUTLwEmWUveE-gq-qivxVLdrF4yFgE6dRb3-yMEP6KEBYV3tXu6DMPIiA/exec";
+
+    function getName() {
+      var url = script_url + "?action=getName&code=" + $("#code").val();
+      $.getJSON(url, function (json) {
+        if (json.records.length == 0) alert("Invalid invitation code");
+      });
+    }
+
+    // Make an AJAX call to Google Script
+    function insert_value() {
+
+      $("#re").css("visibility", "hidden");
+      document.getElementById("loader").style.visibility = "visible";
+      $('#mySpinner').addClass('spinner');
+
+      var id1 = $("#id").val();
+      var name = $("#name").val();
+
+
+      var url = script_url + "?callback=ctrlq&name=" + name + "&id=" + id1 + "&action=insert";
+
+
+      var request = jQuery.ajax({
+        crossDomain: true,
+        url: url,
+        method: "GET",
+        dataType: "jsonp"
+      });
+
+    }
+
+    function update_value() {
+      $("#re").css("visibility", "hidden");
+      document.getElementById("loader").style.visibility = "visible";
+      var id1 = $("#id").val();
+      var name = $("#name").val();
+      var url = script_url + "?callback=ctrlq&name=" + name + "&id=" + id1 + "&action=update";
+      var request = jQuery.ajax({
+        crossDomain: true,
+        url: url,
+        method: "GET",
+        dataType: "jsonp"
+      });
+
+    }
+
+    function delete_value() {
+      $("#re").css("visibility", "hidden");
+      document.getElementById("loader").style.visibility = "visible";
+      $('#mySpinner').addClass('spinner');
+      var id1 = $("#id").val();
+      var name = $("#name").val();
+      var url = script_url + "?callback=ctrlq&name=" + name + "&id=" + id1 + "&action=delete";
+      var request = jQuery.ajax({
+        crossDomain: true,
+        url: url,
+        method: "GET",
+        dataType: "jsonp"
+      });
+
+    }
+
+    // print the returned data
+    function ctrlq(e) {
+      alert(e);
+    }
+
+    function read_value() {
+
+      $("#re").css("visibility", "hidden");
+
+      document.getElementById("loader").style.visibility = "visible";
+      var url = script_url + "?action=read";
+
+      $.getJSON(url, function (json) {
+        var table = document.createElement("table");
+
+        var header = table.createTHead();
+        var row = header.insertRow(0);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+
+        cell1.innerHTML = "<b>ID</b>";
+        cell2.innerHTML = "<b>Name</b>";
+
+        // ADD JSON DATA TO THE TABLE AS ROWS.
+        for (var i = 0; i < json.records.length; i++) {
+
+          tr = table.insertRow(-1);
+          var tabCell = tr.insertCell(-1);
+          tabCell.innerHTML = json.records[i].ID;
+          tabCell = tr.insertCell(-1);
+          tabCell.innerHTML = json.records[i].NAME;
+        }
+
+
+        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+        var divContainer = document.getElementById("showData");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(table);
+        document.getElementById("loader").style.visibility = "hidden";
+        $("#re").css("visibility", "visible");
+      });
+    }
+
+  </script>
+
   <!-- Begin Script for Countdown -->
 
   <!-- Github Button -->
@@ -69,23 +180,23 @@
         <div id="mobile-nav" class="navbar-menu">
           <div class="navbar-end">
             <div class="navbar-item">
-              <a class="navbar-item" href="#Waktu">
+              <a class="navbar-item" style="text-decoration: none;" href="#Waktu">
                 Time
               </a>
             </div>
             <div class="navbar-item">
-              <a class="navbar-item" href="#lokasi">
+              <a class="navbar-item" style="text-decoration: none;" href="#lokasi">
                 Location
               </a>
             </div>
 
             <div class="navbar-item">
-              <a class="navbar-item" href="#tentang-sherly-daeng">
+              <a class="navbar-item" style="text-decoration: none;" href="#tentang-sherly-daeng">
                 About Justin and Jeanne
               </a>
             </div>
             <div class="navbar-item">
-              <a class="navbar-item" href="#rsvp">
+              <a class="navbar-item" style="text-decoration: none;" href="#rsvp">
                 RSVP
               </a>
             </div>
@@ -104,7 +215,7 @@
             2024
             <br>
             <br>
-            <a style="color:white" target="_blank"
+            <a style="color:white;text-decoration: none;" target="_blank"
               href="https://www.google.com/maps/place/San+Guillermo+Parish+Church+(Bacolor+Church)/@15.0005286,120.6485156,15z/data=!4m6!3m5!1s0x3396f6237b19a149:0xbb0dd7b0cb7dcf49!8m2!3d15.0005286!4d120.6485156!16s%2Fm%2F05sy0lq?entry=ttu">
               <i class="fa fa-location-arrow" style="margin-right:10px;" aria-hidden="true"></i> San Guillermo Parish
               Church
@@ -162,20 +273,20 @@
             <div class="column is-12 hero-menu-desktop has-text-centered">
               <ul>
                 <li class="is-active">
-                  <a href="#home">Home</a>
+                  <a href="#home" style="text-decoration: none;">Home</a>
                 </li>
                 <li>
-                  <a href="#Waktu">Time</a>
+                  <a href="#Waktu" style="text-decoration: none;">Time</a>
                 </li>
                 <li>
-                  <a href="#lokasi">Location</a>
+                  <a href="#lokasi" style="text-decoration: none;">Location</a>
                 </li>
                 <li>
-                  <a href="#tentang-sherly-daeng">About Justin & Jeanne</a>
+                  <a href="#tentang-sherly-daeng" style="text-decoration: none;">About Justin & Jeanne</a>
                 </li>
 
                 <li>
-                  <a href="#rsvp">RSVP</a>
+                  <a href="#rsvp" style="text-decoration: none;">RSVP</a>
                 </li>
               </ul>
             </div>
@@ -194,7 +305,7 @@
     <section class="section-light no-padding-top regular-section has-text-centered has-vertically-aligned-content"
       id="regular-section">
 
-      <p class="bodytext" data-aos="fade-up" data-aos-easing="linear">
+      <p class="bodytext h4" data-aos="fade-up" data-aos-easing="linear">
         We invite you to rejoice with us
         <br />
         As we exchange our wedding vows
@@ -205,11 +316,11 @@
 
       <div data-aos="fade-up" data-aos-easing="linear">
         <div class="nama-lengkap">
-         Justin Flores
+          Justin Flores
         </div>
         <div class="ampersand">&</div>
         <div class="nama-lengkap">
-         Jeanne Ver Relatado
+          Jeanne Ver Relatado
         </div>
 
       </div>
@@ -268,35 +379,41 @@
     <!-- Begin Lokasi Section -->
     <section class="section-darker" id="lokasi">
       <div class="container">
-        
+
         <div class="column is-12 regular-section" data-aos="fade-up" data-aos-easing="linear">
           <h1 class="title has-text-centered section-title">Location</h1>
         </div>
         <div class="columns is-multiline" data-aos="fade-up" data-aos-easing="linear">
           <div class="column is-6 has-vertically-aligned-content">
-            
+
             <h1 class="waktu is-larger has-text-centered">
               Wedding Ceremony
               <br>
               <strong> San Guillermo Parish Church
                 <br>
-               Bacolor, Pampanga</strong>
+                Bacolor, Pampanga</strong>
             </h1>
             <div class="section-map" data-aos="fade-up" data-aos-easing="linear">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15415.4361228276!2d120.6485156!3d15.0005286!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3396f6237b19a149%3A0xbb0dd7b0cb7dcf49!2sSan%20Guillermo%20Parish%20Church%20(Bacolor%20Church)!5e0!3m2!1sen!2sph!4v1710045265400!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15415.4361228276!2d120.6485156!3d15.0005286!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3396f6237b19a149%3A0xbb0dd7b0cb7dcf49!2sSan%20Guillermo%20Parish%20Church%20(Bacolor%20Church)!5e0!3m2!1sen!2sph!4v1710045265400!5m2!1sen!2sph"
+                width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
           </div>
           <div class="column is-6 has-vertically-aligned-content">
-            
+
             <h1 class="waktu is-larger has-text-centered">
               Reception
               <br>
               <strong> Casa Esmeralda
                 <br>
-               Purok 5, Bacolor, Pampanga</strong>
+                Purok 5, Bacolor, Pampanga</strong>
             </h1>
             <div class="section-map" data-aos="fade-up" data-aos-easing="linear">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3854.029263532726!2d120.64251560000001!3d14.9910807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33965993f6afc5a3%3A0x6cda025b8865363e!2sCASA%20ESMERALDA!5e0!3m2!1sen!2sph!4v1710045232530!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3854.029263532726!2d120.64251560000001!3d14.9910807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33965993f6afc5a3%3A0x6cda025b8865363e!2sCASA%20ESMERALDA!5e0!3m2!1sen!2sph!4v1710045232530!5m2!1sen!2sph"
+                width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
           </div>
         </div>
@@ -396,12 +513,37 @@
     <!-- Begin RSVP Content -->
     <section class="section-dark contact" id="rsvp">
       <div class="container">
-        <div class="columns is-multiline">
-          <div class="column is-12 prolog">
-            <h1 class="title has-text-centered section-title" data-aos="fade-up" data-aos-easing="linear">Attendance Confirmation</h1>
+        <div class="row">
+          <div class="col-md-12">
+            <h1 class="title has-text-centered section-title" data-aos="fade-up" data-aos-easing="linear">Attendance
+              Confirmation</h1>
           </div>
-          <div class="column is-12 prolog has-text-centered" data-aos="fade-up" data-aos-easing="linear">
-            <p class="h2 subtitle">
+        </div>
+        <div class="row" data-aos="fade-up" data-aos-easing="linear">
+          <div class="col-md-12">
+            <h4 class="has-text-centered">
+              Please put your invitation code below
+            </h4>
+          </div>
+        </div>
+        <div class="row" data-aos="fade-up" data-aos-easing="linear">
+          <div class="col"></div>
+          <div class="col-md-6">
+            <input type="text" style="font-family: Arial, Helvetica, sans-serif; font-weight: bolder;"
+              class="form-control text-center" id="code">
+          </div>
+          <div class="col"></div>
+        </div>
+        <div class="row pt-4" data-aos="fade-up" data-aos-easing="linear">
+          <div class="col"></div>
+          <div class="d-grid gap-2 col-4 mx-auto">
+            <input type="button" class="btn btn-success" onclick="getName()" value="Verify" />
+          </div>
+          <div class="col"></div>
+        </div>
+        <div class="row pt-5" data-aos="fade-up" data-aos-easing="linear">
+          <div class="col-md-12 text-center">
+            <p class="h4">
               It is an honor and happiness for us
               <br>
               if you are willing to attend to give your blessing.
@@ -411,41 +553,31 @@
               <br>
               hopefully we can meet again on another occasion
             </p>
-
-            <a href="https://api.whatsapp.com/send?phone=628xxxxxxxxxx&text=Halo%20Sherly,%20saya%20akan%20datang%20di%20acara%20pernikahan&source=&data="
-              class="button btn-whatsapp" target="_blank" data-aos="zoom-in">
-              <i class="fab fa-whatsapp"></i>
-              &nbsp;&nbsp;Kabari Sherly
-            </a>
-
-
-
-            <a href="https://api.whatsapp.com/send?phone=628xxxxxxxxxx&text=Halo%20Daeng,%20saya%20akan%20datang%20di%20acara%20pernikahan&source=&data="
-              class="button btn-whatsapp" target="_blank" data-aos="zoom-in">
-              <i class="fab fa-whatsapp"></i>
-              &nbsp;&nbsp; Kabari Daeng
-            </a>
-            <div class="space40px"></div>
-
-            <div class="space40px"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
             <div data-aos="fade-up" data-aos-easing="linear">
               <img src="image/divider-leaves.png" class="divider has-text-centered" alt="~~~">
             </div>
-            <div class="space40px"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
             <p class="h2 subtitle" data-aos="fade-up" data-aos-easing="linear">
               The Wedding
               <br>
-              <a class="instagram" :" href="https://instagram.com/justmflores" target="_blank" alt="Instagram Sherly">
+              <a class="instagram" style="text-decoration: none;" href="https://instagram.com/justmflores"
+                target="_blank" alt="Instagram Sherly">
                 <i class="fab fa-instagram"></i> @justmflores
               </a>
               &nbsp
-              <a class="instagram" href="https://instagram.com/jeanneverr" target="_blank" alt="Instagram Daeng">
+              <a class="instagram" style="text-decoration: none;" href="https://instagram.com/jeanneverr"
+                target="_blank" alt="Instagram Daeng">
                 <i class="fab fa-instagram"></i> @jeanneverr
               </a>
             </p>
-
           </div>
-
         </div>
       </div>
     </section>
@@ -457,13 +589,7 @@
   <div class="footer">
     <div class="container">
       <a href="https://github.com/daengdoang/daeng-sherly-menikah" class="has-vertically-align">
-        <p class="has-vertically-align">2020 &copy Daeng Muhammad Feisal</p>
-      </a>
-      <a href="https://bulma.io" class="has-vertically-align">
-        <img src="https://bulma.io/images/made-with-bulma.png" alt="Made with Bulma">
-      </a>
-      <a href="https://www.netlify.com">
-        <img src="https://www.netlify.com/img/global/badges/netlify-color-bg.svg" alt="Deploy with Netlify" />
+        <p class="has-vertically-align">2024 Justin & Jeanne - The Wedding</p>
       </a>
     </div>
   </div>
