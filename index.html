@@ -30,90 +30,27 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
-  <script src="js/jquery.coundown.js"></script>
   <link rel="icon" type="image/png" href="image/favicon.png" />
-  <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23064379-20"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="js/menikah.js"></script>
+  <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
+  <script src="js/index.js"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-
     gtag('config', 'UA-23064379-20');
-    var script_url = "https://script.google.com/macros/s/AKfycbxiJKbtSOuMZDUTLwEmWUveE-gq-qivxVLdrF4yFgE6dRb3-yMEP6KEBYV3tXu6DMPIiA/exec";
 
-    $(function () {
-      var searchParams = new URLSearchParams(window.location.search);
-      if (searchParams.has("Code"))
-        $("#code").val(searchParams.get("Code"));
-    })
-
-    function getName() {
-      if ($("#code").val().trim() == "") {
-        alert("Please input your invitation code");
-        return;
-      }
-
-      $("#btnVerify").prop('disabled', true);
-      $("#btnVerify").html("Wait a moment...");
-      var url = script_url + "?action=getName&code=" + $("#code").val().toUpperCase();
-      $.getJSON(url, function (json) {
-        if (json.records.length == 0) alert("Invalid invitation code");
-        else {
-          var guestName = json.records[0][0];
-          var additionalHeadCount = json.records[0][2] == "" ? 0 : parseInt(json.records[0][2]);
-          var additionalHeadNames = json.records[0][3] == "" ? [] : json.records[0][3].split(',');
-          if (additionalHeadCount > 0) {
-            var fields = new Array();
-            for (var i = 0; i < additionalHeadCount; i++) {
-              fields.push('<div class="col-md-12 pt-2"><input type="text" placeholder="Name of additional person" class="form-control additional-person"></div>');
-            }
-
-            $('#additionalHeads').html(fields.join(''));
-
-            var i = 0;
-            additionalHeadNames.forEach(x => {
-              $('.additional-person').eq(i).val(x);
-              i++;
-            });
-
-            $('#additionalHeadDiv').show();
-          }
-          else $('#additionalHeadDiv').hide();
-
-          $('#guestName').html(guestName);
-          $('#additionalHeadCount').html(additionalHeadCount);
-          $('#attendanceModal').modal("show");
-        }
-
-        $("#btnVerify").prop('disabled', false);
-        $("#btnVerify").html("Verify");
+    $(document).ready(function () {
+      AOS.init({
+        easing: "ease-out",
+        duration: 800,
       });
-    }
-
-    function updateAttendance(response) {
-      var additionalHeadNames = [];
-      $('.additional-person').each(function () {
-        if ($(this).val().trim() != "") additionalHeadNames.push($(this).val().trim());
-      });
-
-      var url = script_url + "?action=updateAttendance&attending=" + response
-        + "&code=" + $("#code").val().toUpperCase()
-        + "&additionalHeads=" + additionalHeadNames.toString()
-        + "&confirmHeadCount=" + additionalHeadNames.length;
-
-      $.getJSON(url, function (json) {
-        alert("Thanks for your response!");
-        $('#attendanceModal').modal("hide");
-      });
-    }
-
+    });
   </script>
-
-  <!-- Begin Script for Countdown -->
-
-  <!-- Github Button -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
 </head>
 
 <body>
@@ -132,20 +69,20 @@
           </div>
           <div class="row text-center pt-3" id="additionalHeadDiv">
             <div class="col-md-12">
-              You are also entitled to bring <span id="additionalHeadCount" class="fw-bold"></span> person(s) with you!
+              You may bring <span id="additionalHeadCount" class="fw-bold"></span> person(s) with you!
               <br>
-              Please specify the name of the person(s) you wanted to tag along below. Leave blank if not possible.
+              Please specify their names below for our seating chart.
             </div>
             <div id="additionalHeads"></div>
           </div>
           <div class="col-md-12 pt-3 text-center">
-            Are you going to attend?
+            We'd be grateful to have your confirmation on or before November 1, 2024.
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" onclick="updateAttendance('YES')">Yes</button>
-          <button type="button" class="btn btn-primary" onclick="updateAttendance('DECIDING')">Still Deciding</button>
-          <button type="button" class="btn btn-secondary" onclick="updateAttendance('NO')">No</button>
+          <button type="button" class="btn btn-success" onclick="updateAttendance(this, 'YES')">Surely Attending</button>
+          <button type="button" class="btn btn-primary" onclick="updateAttendance(this, 'DECIDING')">Not Yet Sure</button>
+          <button type="button" class="btn btn-secondary" onclick="updateAttendance(this, 'NO')">Not Attending</button>
         </div>
       </div>
     </div>
@@ -163,7 +100,7 @@
     <!-- Begin Hero -->
     <section class="hero is-large">
       <!-- Begin Mobile Nav -->
-      <nav class="navbar is-transparent is-hidden-desktop">
+      <nav class="navbar is-transparent is-hidden-desktop position-absolute">
         <!-- Begin Burger Menu -->
         <div class="navbar-brand is-fixed-top">
           <div class="navbar-burger burger" data-target="mobile-nav">
@@ -203,17 +140,20 @@
       <!-- Begin Hero Content-->
       <div class="hero-body" style="padding-top: 0rem;">
         <div class="container has-text-centered">
-          <div class="deskContent" style="padding-top: 7rem;"></div>
-          <h1 class="subtitle">The Wedding</h1>
-          <h2 class="title deskContent" style="font-family: GustatoryDelightRegular; font-weight: 100; font-size: 110px;">Justin & Jeanne</h2>
-          <h2 class="title phoneContent" style="font-family: GustatoryDelightRegular; font-weight: 100; font-size: 110px;">Justin <br>&<br> Jeanne</h2>
+          <div style="padding-top: 7rem;"></div>
+          <h2 class="title deskContent"
+            style="font-family: GustatoryDelightRegular; font-weight: 100; font-size: 110px;">Justin & Jeanne</h2>
+          <h2 class="title phoneContent"
+            style="font-family: GustatoryDelightRegular; font-weight: 100; font-size: 110px;">Justin <br>&<br> Jeanne
+          </h2>
+          <!--h1 class="subtitle pt-2" style="font-family: 'HattonMedium';font-weight: 100;font-size:40px;">SAVE  THE DATE!</h1-->
           <div class="phoneContent" style="padding-bottom: 5rem;"></div>
           <h4 class="subtitle tempatwaktu">
 
             <i class="fa fa-calendar-check" style="margin-right:10px;" aria-hidden="true"></i> Saturday, December 07,
             2024
-            <br>
-            <br>
+          </br>
+        </br>
             <a style="color:white;text-decoration: none;" target="_blank"
               href="https://www.google.com/maps/place/San+Guillermo+Parish+Church+(Bacolor+Church)/@15.0005286,120.6485156,15z/data=!4m6!3m5!1s0x3396f6237b19a149:0xbb0dd7b0cb7dcf49!8m2!3d15.0005286!4d120.6485156!16s%2Fm%2F05sy0lq?entry=ttu">
               <i class="fa fa-location-arrow" style="margin-right:10px;" aria-hidden="true"></i> San Guillermo Parish
@@ -245,22 +185,6 @@
           </ul>
           <div class="spasi">
           </div>
-          <script type="text/javascript">
-            var now = new Date();
-            var day = now.getDate();
-            var month = now.getMonth() + 1;
-            var year = now.getFullYear() + 1;
-
-            var nextyear = month + '/' + day + '/' + year + ' 07:07:07';
-            var harih = '12/07/2024 17:00:00';
-
-            $('#hitungmundur').countdown({
-              date: harih, // TODO Date format: 07/27/2017 17:00:00
-              offset: +8, // TODO Your Timezone Offset
-            }, function () {
-              alert('Done!');
-            });
-          </script>
         </div>
         <!-- End Countdown -->
       </div>
@@ -272,20 +196,20 @@
             <div class="column is-12 hero-menu-desktop has-text-centered">
               <ul>
                 <li class="is-active">
-                  <a href="#home" style="text-decoration: none;">Home</a>
+                  <a href="#home" style="text-decoration: none;font-family:'HattonMedium';">Home</a>
                 </li>
                 <li>
-                  <a href="#Waktu" style="text-decoration: none;">Time</a>
+                  <a href="#Waktu" style="text-decoration: none;font-family:'HattonMedium';">Time</a>
                 </li>
                 <li>
-                  <a href="#lokasi" style="text-decoration: none;">Location</a>
+                  <a href="#lokasi" style="text-decoration: none;font-family:'HattonMedium';">Location</a>
                 </li>
                 <li class="d-none">
-                  <a href="#tentang-sherly-daeng" style="text-decoration: none;">About Justin & Jeanne</a>
+                  <a href="#tentang-sherly-daeng" style="text-decoration: none;font-family:'HattonMedium';">About Justin & Jeanne</a>
                 </li>
 
                 <li>
-                  <a href="#rsvp" style="text-decoration: none;">RSVP</a>
+                  <a href="#rsvp" style="text-decoration: none;font-family:'HattonMedium';">RSVP</a>
                 </li>
               </ul>
             </div>
@@ -305,12 +229,10 @@
       id="regular-section">
 
       <p class="bodytext h4" data-aos="fade-up" data-aos-easing="linear">
-        We invite you to rejoice with us
-        <br />
-        As we exchange our wedding vows
+        Together with their families ,
       </p>
 
-      <span class="space40px"></span>
+      <!--span class="space40px"></span-->
       <span class="space40px"></span>
 
       <div data-aos="fade-up" data-aos-easing="linear">
@@ -321,8 +243,11 @@
         <div style="font-family: GustatoryDelightRegular !important; font-size: 70px;" class="nama-lengkap">
           Jeanne Ver Relatado
         </div>
-
       </div>
+      <span class="space40px"></span>
+      <p class="bodytext h4" data-aos="fade-up" data-aos-easing="linear">
+        invites you to celebrate their big day.
+      </p>
       <span class="space40px"></span>
       <div data-aos="fade-up" data-aos-easing="linear">
         <img src="image/divider-leaves.png" class="divider has-text-centered" alt="~~~">
@@ -343,7 +268,7 @@
           <div class="column is-4 has-vertically-aligned-content">
 
             <p class="is-larger has-text-centered">
-            <div class="waktu tanggal-hari has-text-centered">Saturday</div>
+            <div class="waktu tanggal-hari has-text-centered" >Saturday</div>
             <div class="waktu tanggal-angka has-text-centered">07</div>
             <div class="waktu tanggal-bulan has-text-centered">December 2024</div>
             </p>
@@ -352,20 +277,20 @@
           <div class="column is-4 has-vertically-aligned-content">
 
             <p class="waktu is-larger has-text-centered">
-              Wedding Ceremony
+              Ceremony
               <br>
-              <strong>03:00 PM</strong>
+              <strong style="font-family: 'HattonMedium';">TBA</strong>
             </p>
 
           </div>
 
           <div class="column is-4 has-vertically-aligned-content">
 
-            <h1 class="waktu is-larger has-text-centered">
+            <p class="waktu is-larger has-text-centered">
               Reception
               <br>
-              <strong>04:00 PM - 06:00 PM</strong>
-            </h1>
+              <strong style="font-family: 'HattonMedium';">TBA</strong>
+            </p>
 
 
           </div>
@@ -386,11 +311,12 @@
           <div class="column is-6 has-vertically-aligned-content">
 
             <h1 class="waktu is-larger has-text-centered">
-              Wedding Ceremony
+              Ceremony
               <br>
-              <strong> San Guillermo Parish Church
+              <br>
+              <strong style="font-family: 'HattonMedium';"> San Guillermo Parish Church </strong>
                 <br>
-                Bacolor, Pampanga</strong>
+              Bacolor, Pampanga
             </h1>
             <div class="section-map" data-aos="fade-up" data-aos-easing="linear">
               <iframe
@@ -404,9 +330,10 @@
             <h1 class="waktu is-larger has-text-centered">
               Reception
               <br>
-              <strong> Casa Esmeralda
+              <br>
+              <strong style="font-family: 'HattonMedium';"> Casa Esmeralda </strong>
                 <br>
-                Purok 5, Bacolor, Pampanga</strong>
+                Purok 5, Bacolor, Pampanga
             </h1>
             <div class="section-map" data-aos="fade-up" data-aos-easing="linear">
               <iframe
@@ -514,14 +441,13 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <h1 class="title has-text-centered section-title" data-aos="fade-up" data-aos-easing="linear">Attendance
-              Confirmation</h1>
+            <h1 class="title has-text-centered section-title" data-aos="fade-up" data-aos-easing="linear">WE CAN'T WAIT TO SEE YOU!</h1>
           </div>
         </div>
         <div class="row" data-aos="fade-up" data-aos-easing="linear">
           <div class="col-md-12">
             <h4 class="has-text-centered">
-              Please put your invitation code below
+              Please input the invitation code provided to you to confirm your attendance.
             </h4>
           </div>
         </div>
@@ -544,14 +470,9 @@
         <div class="row pt-5" data-aos="fade-up" data-aos-easing="linear">
           <div class="col-md-12 text-center">
             <p class="h4">
-              It is an honor and happiness for us
+              If you are still unsure of your attendance,
               <br>
-              if you are willing to attend to give your blessing.
-              <br>
-              <br>
-              If it's not possible to attend our wedding, that's okay,
-              <br>
-              hopefully we can meet again on another occasion
+              you may send us your confirmation until the 1st of November.
             </p>
           </div>
         </div>
@@ -565,7 +486,6 @@
         <div class="row">
           <div class="col-md-12 text-center">
             <p class="h2 subtitle" data-aos="fade-up" data-aos-easing="linear">
-              The Wedding
               <br>
               <a class="instagram" style="text-decoration: none;" href="https://instagram.com/justmflores"
                 target="_blank" alt="Instagram Sherly">
@@ -595,17 +515,6 @@
   </div>
   <!-- End Footer -->
 
-  <!-- Scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="js/menikah.js"></script>
-  <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
-  <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
-  <script>
-    AOS.init({
-      easing: "ease-out",
-      duration: 800,
-    });
-  </script>
 </body>
 
 </html>

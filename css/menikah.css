@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Lato|Raleway|Rouge+Script");
+@import url("https://fonts.googleapis.com/css?family=Lato|Monsterrat|Rouge+Script");
 .has-vertically-aligned-content {
   display: flex;
   flex-direction: column;
@@ -10,7 +10,7 @@
 }
 
 html {
-  font-family: 'Raleway', Tahoma, sans-serif;
+  font-family: 'Monsterrat', Tahoma, sans-serif;
   width: 100%;
   min-height: 100%;
 }
@@ -29,28 +29,28 @@ html {
 }
 
 .navbar-item.is-active{
-  border-bottom: 2px solid #996E6D;
+  border-bottom: 2px solid #967ea7;
 }
 
 .a.navbar-item{
-  font-color: #996E6D;
+  font-color: #967ea7;
 }
 
 
 .hero {
-  background-image: url(https://picsum.photos/id/25/1920/1080);
-  background: linear-gradient(rgba(153, 110, 109, 0.65), rgba(153, 110, 109, 0.65)), rgba(0, 0, 0, 0.55) url("https://picsum.photos/id/381/1920/1080") no-repeat;
+  background-image:url('../image/greyfloralpattern.png');
+  background: linear-gradient(#dbc6eade, #ab90bf9d), rgba(0, 0, 0, 0.55)url('../image/greyfloralpattern.png')no-repeat;
   background-attachment: fixed;
   background-size: cover;
   color: white;
   box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Monsterrat', sans-serif;
 }
 
 
 
 .hero .title {
-  font-family: 'Rouge Script', sans-serif;
+  font-family: 'Rouge Script', serif;
   font-weight: 700;
   transform: rotate(-2deg);
   font-size: 5rem;
@@ -60,6 +60,7 @@ html {
 
 .hero .subtitle {
   padding: 35px;
+  padding-bottom:20px;
   color: whitesmoke;
   font-size: 1.3rem;
 }
@@ -102,17 +103,17 @@ html {
 }
 
 .hero .hero-foot .hero-foot--wrapper .hero-menu-desktop ul li.is-active a {
-  border-bottom: 2px solid #996E6D;
+  border-bottom: 2px solid #967ea7;
 }
 
 .hero .hero-foot .hero-foot--wrapper .hero-menu-desktop ul li a {
-  color: #996E6D;
+  color: #967ea7;
 }
 
 .hero .hero-foot .hero-foot--wrapper .hero-menu-desktop ul li a:hover {
-  color: #996E6D;
+  color: #967ea7;
   transition: all .2s ease-in-out;
-  border-bottom: 2px solid #c28285;
+  border-bottom: 2px solid #967ea7;
 }
 
 
@@ -126,17 +127,17 @@ html {
 
 .main-content {
   padding-top: 2rem;
-  color: #000; 
-  font-family: 'Raleway', sans-serif;
+  color: #4a4052; 
+  font-family: 'Monsterrat';
 }
 
 .main-content .section-dark {
-  background-color: #F4E2E2;
+  background-color: #f5eef9;
   padding: 80px 40px;
 }
 
 .main-content .section-darker {
-  background-color: #EDD2D1;
+  background-color: #ffffff;
   padding: 80px 40px;
 }
 
@@ -157,9 +158,9 @@ html {
 }
 
 .main-content .section-dark.resume button {
-  border: 2px solid #996E6D;
+  border: 2px solid #967ea7;
   background: white;
-  color: #996E6D;
+  color: #967ea7;
   height: 50px;
   width: 250px;
   font-size: 1rem;
@@ -167,7 +168,7 @@ html {
 }
 
 .main-content .section-dark.resume .fa-download {
-  color: #996E6D;
+  color: #967ea7;
 }
 
 .main-content .section-dark.my-work {
@@ -262,7 +263,7 @@ html {
   height: 50px;
   font-size: 1.1rem;
   text-transform: uppercase;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Monsterrat', sans-serif;
 }
 
 @media (max-width: 599px) {
@@ -273,7 +274,7 @@ html {
 
 .main-content .section-color.pertanyaan {
   padding: 100px;
-  background-color: #996E6D;
+  background-color: #967ea7;
   color: white;
 }
 
@@ -288,9 +289,9 @@ html {
 }
 
 .main-content .section-title {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'HattonMedium';
   font-weight: 900;
-  color: #996E6D;
+  color: #967ea7;
   text-transform: uppercase;
   font-size: 1.5rem;
   letter-spacing: 0px;
@@ -299,7 +300,7 @@ html {
 
 .nama-lengkap {
   font-family: 'Rouge Script', sans-serif;
-  color: #996E6D;
+  color: #967ea7;
   font-size: 3.5rem;
   letter-spacing: 0px;
   padding-bottom: 6px;
@@ -309,7 +310,7 @@ html {
 .ampersand {
 font-size: 5rem;
 font-family: 'Rouge Script', sans-serif;
-color: #996E6D;
+color: #967ea7;
 line-height: 5rem;
 display: inline-block;
 vertical-align: middle;
@@ -321,19 +322,19 @@ vertical-align: middle;
 
 .waktu {
   font-size: 1.4rem;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Monsterrat', sans-serif;
 }
 
 .tanggal-angka {
   font-size: 5rem;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Monsterrat', sans-serif;
   font-weight: 900;
   line-height: 1;
 }
 
 .tempat {
   font-size: 1.4rem;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Monsterrat', sans-serif;
   font-size: ;
   margin-bottom: 50px;
 }
@@ -350,7 +351,7 @@ vertical-align: middle;
   line-height: 25px;
   text-align: center;
   vertical-align: middle;
-  background: #c28285;
+  background: #967ea7;
   color: whitesmoke;    
 }
 
@@ -406,7 +407,7 @@ vertical-align: middle;
   z-index: 99;
   border: none;
   outline: none;
-  background-color: #996E6D;
+  background-color: #967ea7;
   color: white;
   cursor: pointer;
   border-radius: 50%;
@@ -428,9 +429,9 @@ vertical-align: middle;
 }
 
 ::-webkit-scrollbar-thumb {
-  box-shadow: inset 0 0 6px #996E6D;
-  -webkit-box-shadow: inset 0 0 6px #996E6D;
-  background-color: #BC8887;
+  box-shadow: inset 0 0 6px #967ea7;
+  -webkit-box-shadow: inset 0 0 6px #967ea7;
+  background-color: #967ea7;
 }
 
 body.preloader-site {
@@ -500,12 +501,12 @@ body.preloader-site {
 }
 
 .btn-cta {
-  background-color: #996E6D;
+  background-color: #967ea7;
   width:  210px;
   height: 65px;
   color: white;
   font-size: 1.2rem;
-  border: 2px solid #996E6D;
+  border: 2px solid #967ea7;
   border-radius: 10px;
   align-items: center;
   margin: 1rem;
@@ -557,7 +558,7 @@ body.preloader-site {
 .dusty-pink-lighter {color: #EDD2D1}
 .dusty-pink-lightest {color: #F4E2E2}
 .dusty-pink-darker {color: #BC8887}
-.dusty-pink-darkest {color: #996E6D}
+.dusty-pink-darkest {color: #967ea7}
 
 .tile {
   border-radius: 10px;
@@ -643,7 +644,7 @@ body.preloader-site {
 }
 
 .instagram {
-  color: #996E6D;
+  color: #967ea7;
   font-size: 1.25rem;
   font-weight: 900;
   margin-top: 0.5rem;

@@ -4,6 +4,16 @@
  */
 /* FONT PATH
  * -------------------------- */
+ @font-face {
+  font-family: 'HattonMedium';
+  src: url('../fonts/PP Hatton Medium 500.otf');
+}
+
+@font-face {
+  font-family: 'Monsterrat';
+  src: url('../fonts/Montserrat-VariableFont_wght.ttf');
+}
+
 @font-face {
   font-family: 'AdeptlyRegular';
   src: url('../fonts/AdeptlyRegular-OVz6d.ttf');
