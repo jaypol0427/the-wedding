@@ -1,4 +1,55 @@
 @import url("https://fonts.googleapis.com/css?family=Lato|Monsterrat|Rouge+Script");
+
+@font-face {
+  font-family: 'HattonMedium';
+  src: url('../fonts/PP Hatton Medium 500.otf');
+}
+
+@font-face {
+  font-family: 'Monsterrat';
+  src: url('../fonts/Montserrat-VariableFont_wght.ttf');
+}
+
+@font-face {
+  font-family: 'Le Jour Script';
+  src: url('../fonts/Le Jour Script.ttf');
+}
+
+@font-face {
+  font-family: 'Biancha';
+  src: url('../fonts/Biancha-X3VOa.otf');
+}
+
+@font-face {
+  font-family: 'Modelistasignature';
+  src: url('../fonts/Modelistasignature-ownAV.otf');
+}
+
+@font-face {
+  font-family: 'GustatoryDelightRegular';
+  src: url('../fonts/GustatoryDelightRegular-rgX3L.ttf');
+}
+
+@media all and (min-width: 480px) {
+  .deskContent {
+    display: block;
+  }
+
+  .phoneContent {
+    display: none;
+  }
+}
+
+@media all and (max-width: 479px) {
+  .deskContent {
+    display: none;
+  }
+
+  .phoneContent {
+    display: block;
+  }
+}
+
 .has-vertically-aligned-content {
   display: flex;
   flex-direction: column;
