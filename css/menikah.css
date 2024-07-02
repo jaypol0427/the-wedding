@@ -88,7 +88,7 @@ html {
 }
 
 .hero-body {
-  background: linear-gradient(#dbc6eade, #ab90bf9d), rgba(0, 0, 0, 0.55)url('../image/bg_drawing.PNG')no-repeat;
+  background: linear-gradient(#dbc6eade, #ab90bf9d), rgba(0, 0, 0, 0.55)url('../image/bg_drawing.png')no-repeat;
   background-position: top;
   background-size: 700px;
 }
