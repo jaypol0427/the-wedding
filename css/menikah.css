@@ -87,10 +87,15 @@ html {
   font-color: #967ea7;
 }
 
-
+.hero-body {
+  background: linear-gradient(#dbc6eade, #ab90bf9d), rgba(0, 0, 0, 0.55)url('../image/bg_drawing.PNG')no-repeat;
+  background-position: top;
+  background-size: 700px;
+}
 .hero {
-  background-image:url('../image/greyfloralpattern.png');
-  background: linear-gradient(#dbc6eade, #ab90bf9d), rgba(0, 0, 0, 0.55)url('../image/greyfloralpattern.png')no-repeat;
+  background-size:contain;
+  /* background-image:url('../image/bg_drawing_white.PNG'); */
+  background: linear-gradient(#dbc6eade, #ab90bf9d), rgba(0, 0, 0, 0.55);
   background-attachment: fixed;
   background-size: cover;
   color: white;
@@ -704,3 +709,4 @@ body.preloader-site {
   text-align: center;
   padding: 10px;
 }
+
