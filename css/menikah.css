@@ -710,3 +710,6 @@ body.preloader-site {
   padding: 10px;
 }
 
+.modal-card, .modal-content {
+  margin: 0px !important;
+}

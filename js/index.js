@@ -46,7 +46,7 @@ function getName() {
 
     $("#btnVerify").prop('disabled', true);
     $("#btnVerify").html("Wait a moment...");
-    var url = script_url + "?action=getName&code=" + $("#code").val().toUpperCase();
+    var url = script_url + "?action=getName&code=" + $("#code").val();
     $.getJSON(url, function (json) {
         if (json.records.length == 0) alert("Invalid invitation code");
         else {
@@ -77,7 +77,7 @@ function getName() {
         }
 
         $("#btnVerify").prop('disabled', false);
-        $("#btnVerify").html("Verify");
+        $("#btnVerify").html("Confirm Attendance");
     });
 }
 
