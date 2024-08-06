@@ -91,7 +91,7 @@ function updateAttendance(e, response) {
     });
 
     var url = script_url + "?action=updateAttendance&attending=" + response
-        + "&code=" + $("#code").val().toUpperCase()
+        + "&code=" + $("#code").val()
         + "&additionalHeads=" + additionalHeadNames.toString()
         + "&confirmHeadCount=" + additionalHeadNames.length;
 
