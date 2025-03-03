@@ -1,4 +1,4 @@
-var script_url = "https://script.google.com/macros/s/AKfycbxiJKbtSOuMZDUTLwEmWUveE-gq-qivxVLdrF4yFgE6dRb3-yMEP6KEBYV3tXu6DMPIiA/exec";
+var script_url = "https://script.google.com/macros/s/AKfycbxxfWpa649W48wXRJ5EjAZeDjJulVWev2QLVc92QO-QL03NB_FQsbgKTP8v_5bG25Dsvw/exec";
 
 $(document).ready(function () {
     var searchParams = new URLSearchParams(window.location.search);
@@ -6,7 +6,7 @@ $(document).ready(function () {
         $("#code").val(searchParams.get("Code"));
 
     // Set the date we're counting down to
-    var countDownDate = new Date("2024-12-07 17:00:00").getTime();
+    var countDownDate = new Date("2025-04-27 14:00:00").getTime();
 
     // Update the countdown every second
     setInterval(function () {
