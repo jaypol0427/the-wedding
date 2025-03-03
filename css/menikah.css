@@ -61,7 +61,7 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-color: #442918;
+  background-color: #62391d;
 }
 
 /* Different shades */
@@ -105,7 +105,7 @@ html {
 }
 
 .hero-body {
-  /* background: linear-gradient(#dbc6eade, #ab90bf9d), rgba(0, 0, 0, 0.55)url('../image/bg_drawing.png')no-repeat; */
+  background: linear-gradient(#fcf6ec, #fcf6ec), rgba(0, 0, 0, 0.55)no-repeat;
   background-position: top;
   background-size: 700px;
   background: #fcf6ec;
@@ -129,13 +129,13 @@ html {
   transform: rotate(-2deg);
   font-size: 5rem;
   padding-bottom: 5px;
-  color: #442918;
+  color: #62391d;
 }
 
 .hero .subtitle {
   padding: 35px;
   padding-bottom:20px;
-  color: #442918;
+  color: #62391d;
   font-size: 1.3rem;
 }
 
@@ -180,7 +180,7 @@ html {
 }
 
 .hero .hero-foot .hero-foot--wrapper .hero-menu-desktop ul li a {
-  color: #442918;
+  color: #62391d;
 }
 
 .hero .hero-foot .hero-foot--wrapper .hero-menu-desktop ul li a:hover {
@@ -364,7 +364,7 @@ html {
 .main-content .section-title {
   font-family: 'HattonMedium';
   font-weight: 900;
-  color: #442918;
+  color: #62391d;
   text-transform: uppercase;
   font-size: 1.5rem;
   letter-spacing: 0px;
@@ -373,7 +373,7 @@ html {
 
 .nama-lengkap {
   font-family: 'Rouge Script', sans-serif;
-  color: #442918;
+  color: #62391d;
   font-size: 3.5rem;
   letter-spacing: 0px;
   padding-bottom: 6px;
